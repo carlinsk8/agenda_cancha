@@ -11,40 +11,38 @@ final _agendaRepository = AgendaRepository();
 class AgendaBloc extends Bloc<AgendaEvent, AgendaState> {
   AgendaBloc() : super(AgendaInitial()) {
     on<AddAgenda>((event, emit) async {
-      final res = await _agendaRepository.getCanchaDay(
+      final count = await _agendaRepository.getCanchaDay(
           event.agenda.date, event.agenda.name);
-      int count = res[0]['count(*)'];
-      if (count <= 3) {
+      if (count < 3) {
         emit(LoadingAgenda(state.listAgenta));
         //obteniendo clima
         final resp = await _agendaRepository.getDataClimaDay('2022-02-24');
-
+        //Agragando temperatura y icon segun clima
         event.agenda.grado = '${resp.current.tempC}C°';
         event.agenda.icon = resp.current.condition.icon;
-        state.listAgenta.add(event.agenda);
-        //Ordenando por fecha
-        state.listAgenta.sort((a, b) {
-          var adate = a.date;
-          var bdate = b.date;
-          return -bdate.compareTo(adate);
-        });
+        //creando nueva agenda
         await _agendaRepository.newAgenda(event.agenda);
-        emit(AgendaListSetState(state.listAgenta));
 
         add(GetAgendas());
         add(ChangeMsjErrorAgenda(null));
       } else {
         add(ChangeMsjErrorAgenda(
-            'Esta cancha supero el limite de agenda por día'));
+            'Esta cancha supero el limite de agenda por día.'));
       }
     });
+
     on<DeleteAgenda>((event, emit) async {
       await _agendaRepository.deleteAgenda(event.id);
       add(GetAgendas());
     });
+
     on<GetAgendas>((event, emit) async {
       final res = await _agendaRepository.getAllAgenda();
-      emit(AgendaListSetState(res));
+      if (res.isEmpty) {
+        emit(AgendaInitial());
+      } else {
+        emit(AgendaListSetState(res));
+      }
     });
 
     on<ChangeMsjErrorAgenda>((event, emit) {

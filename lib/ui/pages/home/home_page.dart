@@ -36,34 +36,37 @@ class _HomePageState extends State<HomePage> {
               builder: (context, state) {
                 return SlideCard(
                   canchas: state.listCancha,
-                  title: 'Seleccione su canchas de tenis',
+                  title: 'Seleccione su cancha de tenis',
                 );
               },
             ),
             const CustomTilte(
               title: 'Canchas agendadas',
             ),
-            Expanded(
-              child: BlocBuilder<AgendaBloc, AgendaState>(
-                builder: (context, state) {
-                  if (state is AgendaListSetState ||
-                      state is MsjErrorAddSetState) {
-                    return ListView.builder(
-                      itemCount: state.listAgenta.length,
-                      itemBuilder: (_, int i) {
-                        return CardAgenda(
-                          agenda: state.listAgenta[i],
-                        );
-                      },
-                    );
-                  } else {
-                    return const Text('No hay canchas agendadas');
-                  }
-                },
-              ),
-            )
+            listCanchasAgendadas()
           ],
         ),
+      ),
+    );
+  }
+
+  Expanded listCanchasAgendadas() {
+    return Expanded(
+      child: BlocBuilder<AgendaBloc, AgendaState>(
+        builder: (context, state) {
+          if (state is AgendaListSetState || state is MsjErrorAddSetState) {
+            return ListView.builder(
+              itemCount: state.listAgenta.length,
+              itemBuilder: (_, int i) {
+                return CardAgenda(
+                  agenda: state.listAgenta[i],
+                );
+              },
+            );
+          } else {
+            return const Text('No hay canchas agendadas');
+          }
+        },
       ),
     );
   }

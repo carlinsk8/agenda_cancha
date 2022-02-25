@@ -50,13 +50,14 @@ class DBService {
     return res.isNotEmpty ? res.map((e) => Agenda.fromMap(e)).toList() : [];
   }
 
-  Future<List> getCanchaDay(String date, String name) async {
+  Future<int> getCanchaDay(String date, String name) async {
     final db = await database;
     //final res = await db!.query('Agenda');
     final res = await db!.rawQuery(
-        "SELECT count(*)  FROM Agenda WHERE name = ? AND date = ?",
+        "SELECT count(*) AS Total FROM Agenda WHERE name = ? AND date = ?",
         [name, date]);
-    return res;
+    final List list = res;
+    return list[0]['Total'];
   }
 
   Future<int> deleteAgenda(int? id) async {

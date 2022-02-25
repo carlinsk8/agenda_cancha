@@ -17,6 +17,6 @@ class AgendaRepository {
   Future<int> newAgenda(Agenda newAgenda) => DBService.db.newAgenda(newAgenda);
   Future<List<Agenda>> getAllAgenda() => DBService.db.getAllAgenda();
   Future<int> deleteAgenda(int? id) => DBService.db.deleteAgenda(id);
-  Future<List> getCanchaDay(String date, String name) =>
+  Future<int> getCanchaDay(String date, String name) =>
       DBService.db.getCanchaDay(date, name);
 }
