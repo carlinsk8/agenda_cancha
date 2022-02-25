@@ -98,7 +98,7 @@ class _FormReservaState extends State<FormReserva> {
       final formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
       dateController.text = formattedDate;
       BlocProvider.of<FormAgendaBloc>(context)
-          .add(SetDateAgenda(formattedDate));
+          .add(SetDateAgenda(newDate: formattedDate));
     }
   }
 
@@ -142,6 +142,8 @@ class _FormReservaState extends State<FormReserva> {
       'imgUrl': widget.cancha.imgUrl,
       'user': userController.text,
       'date': '${state.date}',
+      'icon': '${state.icon}',
+      'grado': '${state.grado}',
     };
     final agenda = Agenda.fromMap(body);
     if (state.formKey.currentState!.validate()) {

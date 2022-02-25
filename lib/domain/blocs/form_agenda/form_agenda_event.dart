@@ -3,8 +3,16 @@ part of 'form_agenda_bloc.dart';
 @immutable
 abstract class FormAgendaEvent {}
 
-class SetDateAgenda extends FormAgendaEvent {
-  final String newDate;
+class DateInitial extends FormAgendaEvent {}
 
-  SetDateAgenda(this.newDate);
+class SetDateAgenda extends FormAgendaEvent {
+  final String? newDate;
+  final String? newGrado;
+  final String? newIcon;
+
+  SetDateAgenda({
+    this.newDate,
+    this.newGrado,
+    this.newIcon,
+  });
 }

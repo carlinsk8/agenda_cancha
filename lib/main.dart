@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => FormAgendaBloc()),
       ],
       child: MaterialApp(
-        title: 'Material App',
+        debugShowCheckedModeBanner: false,
+        title: 'Agendamiendo de canchas',
         initialRoute: 'home',
         routes: {
           'home': (_) => const HomePage(),

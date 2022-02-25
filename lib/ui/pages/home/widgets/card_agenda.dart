@@ -1,7 +1,9 @@
-import 'package:agenda_cancha/domain/blocs/agenda/agenda_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:agenda_cancha/domain/entities/agenda.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '/domain/blocs/agenda/agenda_bloc.dart';
+import '/domain/entities/agenda.dart';
 
 class CardAgenda extends StatelessWidget {
   final Agenda agenda;
@@ -36,12 +38,12 @@ class CardAgenda extends StatelessWidget {
                 width: 50,
                 height: 50,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: BorderRadius.circular(5),
                   child: FadeInImage(
                     placeholder: const AssetImage('assets/no-image.jpg'),
                     image: AssetImage(agenda.imgUrl),
-                    width: 200,
-                    height: 190,
+                    width: 50,
+                    height: 50,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -72,15 +74,11 @@ class CardAgenda extends StatelessWidget {
           ),
           Column(
             children: [
-              // Icon(
-              //   Icons.wb_sunny,
-              //   color: Colors.yellow[800],
-              // ),
-              // Icon(
-              //   Icons.cloud,
-              //   color: Colors.blue[800],
-              // ),
-              if (agenda.icon != null) Image.network('https:${agenda.icon}'),
+              if (agenda.icon != null)
+                Image.network(
+                  '${agenda.icon}',
+                  width: 40,
+                ),
               if (agenda.grado != null) Text('${agenda.grado}'),
               IconButton(
                 onPressed: () => showDialog<String>(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:agenda_cancha/domain/entities/cancha.dart';
+import '/domain/entities/cancha.dart';
 
 class SlideCard extends StatefulWidget {
   final List<Cancha>? canchas;
