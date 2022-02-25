@@ -26,7 +26,7 @@ class _AgendaPageState extends State<AgendaPage> {
     final Cancha cancha = ModalRoute.of(context)!.settings.arguments as Cancha;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Agendar cancha de tenis'),
+        title: Text(cancha.name),
       ),
       body: SingleChildScrollView(
         child: Column(

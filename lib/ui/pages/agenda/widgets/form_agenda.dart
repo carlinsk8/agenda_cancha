@@ -154,7 +154,8 @@ class _FormReservaState extends State<FormReserva> {
       if (msj != null) {
         alertMsj(context, msj);
       } else {
-        Navigator.pushReplacementNamed(context, 'home');
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            'listagenda', (Route<dynamic> route) => false);
       }
     }
   }

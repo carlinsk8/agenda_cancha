@@ -3,22 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/domain/blocs/agenda/agenda_bloc.dart';
-import '/domain/blocs/canchas/canchas_bloc.dart';
-import '/ui/pages/home/widgets/slide_card.dart';
-import '/ui/pages/home/widgets/card_agenda.dart';
 import '/ui/widgets/custom_title.dart';
+import 'widgets/card_agenda.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class AgendaListPage extends StatefulWidget {
+  const AgendaListPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<AgendaListPage> createState() => _AgendaListPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _AgendaListPageState extends State<AgendaListPage> {
   @override
   initState() {
-    BlocProvider.of<CanchasBloc>(context).add(GetCanchasList());
     BlocProvider.of<AgendaBloc>(context).add(GetAgendas());
     super.initState();
   }
@@ -26,22 +23,26 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Agendamiento de canchas'),
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            const CustomTilte(
-              title: 'Agendamiento de canchas',
-            ),
-            BlocBuilder<CanchasBloc, CanchasState>(
-              builder: (context, state) {
-                return SlideCard(
-                  canchas: state.listCancha,
-                  title: 'Seleccione su cancha de tenis',
-                );
-              },
-            ),
-            const CustomTilte(
-              title: 'Canchas agendadas',
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const CustomTilte(
+                    title: 'Canchas agendadas',
+                  ),
+                  ElevatedButton(
+                    child: const Text('Agendar'),
+                    onPressed: () => Navigator.pushNamed(context, 'canchas'),
+                  )
+                ],
+              ),
             ),
             listCanchasAgendadas()
           ],
@@ -54,7 +55,7 @@ class _HomePageState extends State<HomePage> {
     return Expanded(
       child: BlocBuilder<AgendaBloc, AgendaState>(
         builder: (context, state) {
-          if (state is AgendaListSetState || state is MsjErrorAddSetState) {
+          if (state.listAgenta.isNotEmpty) {
             return ListView.builder(
               itemCount: state.listAgenta.length,
               itemBuilder: (_, int i) {

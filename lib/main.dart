@@ -5,7 +5,8 @@ import 'domain/blocs/agenda/agenda_bloc.dart';
 import 'domain/blocs/canchas/canchas_bloc.dart';
 import 'domain/blocs/form_agenda/form_agenda_bloc.dart';
 import 'ui/pages/agenda/agenda_page.dart';
-import 'ui/pages/home/home_page.dart';
+import 'ui/pages/agenda_list/agenda_list.dart';
+import 'ui/pages/canchas/canchas_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -23,9 +24,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Agendamiendo de canchas',
-        initialRoute: 'home',
+        initialRoute: 'listagenda',
         routes: {
-          'home': (_) => const HomePage(),
+          'listagenda': (_) => const AgendaListPage(),
+          'canchas': (_) => const CanchasPage(),
           'agenda': (_) => const AgendaPage(),
         },
       ),

@@ -1,3 +1,4 @@
+import 'package:agenda_cancha/ui/widgets/custom_title.dart';
 import 'package:flutter/material.dart';
 
 import '/domain/entities/cancha.dart';
@@ -5,12 +6,10 @@ import '/domain/entities/cancha.dart';
 class SlideCard extends StatefulWidget {
   final List<Cancha>? canchas;
   final String? title;
-  final Function? onNextPage;
 
   const SlideCard({
     Key? key,
     required this.canchas,
-    this.onNextPage,
     this.title,
   }) : super(key: key);
 
@@ -24,13 +23,6 @@ class _SlideCardState extends State<SlideCard> {
   @override
   void initState() {
     super.initState();
-
-    scrollController.addListener(() {
-      if (scrollController.position.pixels >=
-          scrollController.position.maxScrollExtent - 500) {
-        //widget.onNextPage();
-      }
-    });
   }
 
   @override
@@ -41,29 +33,20 @@ class _SlideCardState extends State<SlideCard> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
-      height: 260,
+      height: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widget.title != null)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                widget.title!,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-            ),
           const SizedBox(height: 5),
           Expanded(
             child: ListView.builder(
-                controller: scrollController,
-                scrollDirection: Axis.horizontal,
-                itemCount: widget.canchas!.length,
-                itemBuilder: (_, int index) => _CanchaPoster(
-                    widget.canchas![index],
-                    '${widget.title}-$index-${widget.canchas![index].id}')),
+              controller: scrollController,
+              scrollDirection: Axis.vertical,
+              itemCount: widget.canchas!.length,
+              itemBuilder: (_, int index) => _CanchaPoster(
+                widget.canchas![index],
+              ),
+            ),
           ),
         ],
       ),
@@ -73,15 +56,14 @@ class _SlideCardState extends State<SlideCard> {
 
 class _CanchaPoster extends StatelessWidget {
   final Cancha cancha;
-  final String heroId;
 
-  const _CanchaPoster(this.cancha, this.heroId);
+  const _CanchaPoster(this.cancha);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
-      height: 190,
+      width: double.infinity,
+      height: 256,
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
@@ -95,20 +77,14 @@ class _CanchaPoster extends StatelessWidget {
                 child: FadeInImage(
                   placeholder: const AssetImage('assets/no-image.jpg'),
                   image: AssetImage(cancha.imgUrl),
-                  width: 200,
-                  height: 190,
+                  width: double.infinity,
+                  height: 180,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
-          const SizedBox(height: 5),
-          Text(
-            cancha.name,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-          )
+          CustomTilte(title: cancha.name),
         ],
       ),
     );
