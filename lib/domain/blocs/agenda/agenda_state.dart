@@ -19,10 +19,17 @@ class AgendaListSetState extends AgendaState {
       : super(listAgenta: newAgentaList);
 }
 
+class LoadingAgenda extends AgendaState {
+  final List<Agenda> newAgentaList;
+  const LoadingAgenda(this.newAgentaList) : super(listAgenta: newAgentaList);
+}
+
 class MsjErrorAddSetState extends AgendaState {
   final List<Agenda> newAgentaList;
-  final String newMsjLimitAdd;
+  final String? newMsjLimitAdd;
 
-  const MsjErrorAddSetState(this.newAgentaList, this.newMsjLimitAdd)
-      : super(listAgenta: newAgentaList, msjLimitAdd: newMsjLimitAdd);
+  const MsjErrorAddSetState({
+    required this.newAgentaList,
+    this.newMsjLimitAdd,
+  }) : super(listAgenta: newAgentaList, msjLimitAdd: newMsjLimitAdd);
 }

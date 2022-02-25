@@ -48,11 +48,11 @@ class _SlideCardState extends State<SlideCard> {
         children: [
           if (widget.title != null)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(
                 widget.title!,
                 style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
           const SizedBox(height: 5),

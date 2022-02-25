@@ -1,5 +1,7 @@
+import 'package:agenda_cancha/domain/blocs/agenda/agenda_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:agenda_cancha/domain/entities/agenda.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CardAgenda extends StatelessWidget {
   final Agenda agenda;
@@ -78,11 +80,8 @@ class CardAgenda extends StatelessWidget {
               //   Icons.cloud,
               //   color: Colors.blue[800],
               // ),
-              Icon(
-                Icons.cloud,
-                color: Colors.grey[800],
-              ),
-              Text(agenda.clima.grado),
+              if (agenda.icon != null) Image.network('https:${agenda.icon}'),
+              if (agenda.grado != null) Text('${agenda.grado}'),
               IconButton(
                 onPressed: () => showDialog<String>(
                   context: context,
@@ -95,7 +94,11 @@ class CardAgenda extends StatelessWidget {
                         child: const Text('No'),
                       ),
                       TextButton(
-                        onPressed: () => Navigator.pop(context, 'Sí'),
+                        onPressed: () {
+                          BlocProvider.of<AgendaBloc>(context)
+                              .add(DeleteAgenda(agenda.id));
+                          Navigator.of(context).pop();
+                        },
                         child: const Text('Sí'),
                       ),
                     ],
